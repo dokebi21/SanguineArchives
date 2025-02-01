@@ -4,11 +4,13 @@
     <AssemblyName>SanguineArchives</AssemblyName>
     <Description>Keep an archive of V Blood fights</Description>
     <Version>0.1.10</Version>
+    <FileVersion>0.1.10.0</FileVersion>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <LangVersion>latest</LangVersion>
     <RootNamespace>SanguineArchives</RootNamespace>
     <AssemblyVersion>0.1.10.0</AssemblyVersion>
-    <FileVersion>0.1.10.0</FileVersion>
+    <Authors>dokebi</Authors>
+    <BepInExPluginGuid>dokebi21.SanguineArchives</BepInExPluginGuid>
     <InformationalVersion>0.1.10+1.Branch.main.Sha.c33d0879382e1a0da34861ec55914ba7e637a80e</InformationalVersion>
   </PropertyGroup>
   <ItemGroup>
@@ -19,4 +21,10 @@
     <PackageReference Include="VRising.VampireCommandFramework" Version="0.9.*" />
     <PackageReference Include="VRising.Bloodstone" Version="0.2.*" />
   </ItemGroup>
+  <PropertyGroup>
+    <CopyTargetDir>C:\Program Files (x86)\Steam\steamapps\common\VRisingDedicatedServer\BepInEx\BloodstonePlugins</CopyTargetDir>
+  </PropertyGroup>
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command='copy "$(TargetPath)" "$(CopyTargetDir)"' ContinueOnError="true" />
+  </Target>
 </Project>
