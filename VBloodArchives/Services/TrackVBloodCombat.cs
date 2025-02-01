@@ -9,7 +9,7 @@ using Unity.Entities;
 using SanguineArchives.Common.BloodyNotify.DB;
 using SanguineArchives.Common.Utils;
 
-namespace SanguineArchives.VBloodRecords.Services;
+namespace SanguineArchives.VBloodArchives.Services;
 
 public class TrackVBloodCombat
 {

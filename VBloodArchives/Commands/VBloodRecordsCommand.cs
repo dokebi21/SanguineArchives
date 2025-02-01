@@ -11,12 +11,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Bloody.Core.Utils.v1;
-using SanguineArchives.VBloodRecords.Data;
+using SanguineArchives.VBloodArchives.Data;
 using SanguineArchives.Common.Utils;
 using VampireCommandFramework;
-using SanguineArchives.VBloodRecords.Services;
+using SanguineArchives.VBloodArchives.Services;
 
-namespace SanguineArchives.VBloodRecords.Commands;
+namespace SanguineArchives.VBloodArchives.Commands;
 
 public class VBloodRecordsCommand
 {

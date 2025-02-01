@@ -3,7 +3,7 @@ using HarmonyLib;
 using ProjectM;
 using Stunlock.Core;
 using Unity.Collections;
-using SanguineArchives.VBloodRecords.Data;
+using SanguineArchives.VBloodArchives.Data;
 
 namespace SanguineArchives.Common.BloodyNotify.Patches;
 

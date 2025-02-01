@@ -3,7 +3,7 @@ using Bloody.Core.API.v1;
 using Bloody.Core.GameData.v1;
 using SanguineArchives.Common.BloodyNotify.DB;
 using SanguineArchives.Common.Utils;
-using SanguineArchives.VBloodRecords.Services;
+using SanguineArchives.VBloodArchives.Services;
 using ProjectM.Network;
 using ProjectM;
 using Stunlock.Core;

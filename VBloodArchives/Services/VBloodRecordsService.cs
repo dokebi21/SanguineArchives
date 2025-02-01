@@ -7,7 +7,7 @@ using Unity.Entities;
 using ProjectM;
 using System.Linq;
 
-namespace SanguineArchives.VBloodRecords.Services
+namespace SanguineArchives.VBloodArchives.Services
 {
     public struct VBloodRecord
     {

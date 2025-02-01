@@ -6,10 +6,10 @@ using Unity.Collections;
 using Unity.Entities;
 using System.Collections;
 using SanguineArchives.Common.BloodyNotify.Systems;
-using SanguineArchives.VBloodRecords.Services;
+using SanguineArchives.VBloodArchives.Services;
 using Stunlock.Core;
 
-namespace SanguineArchives.VBloodRecords.Patches;
+namespace SanguineArchives.VBloodArchives.Patches;
 
  [HarmonyPatch(typeof(CreateGameplayEventOnBehaviourStateChangedSystem), nameof(CreateGameplayEventOnBehaviourStateChangedSystem.OnUpdate))]
 internal static class BehaviorStateChangedSystemPatch

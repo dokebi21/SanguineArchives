@@ -8,7 +8,7 @@ using ProjectM.Scripting;
 using Unity.Entities;
 using UnityEngine;
 using SanguineArchives.Services;
-using SanguineArchives.VBloodRecords.Services;
+using SanguineArchives.VBloodArchives.Services;
 
 namespace SanguineArchives;
 

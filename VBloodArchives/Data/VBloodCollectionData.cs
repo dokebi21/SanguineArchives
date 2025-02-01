@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using SanguineArchives.Common.KindredCommands.Data;
 using Stunlock.Core;
 
-namespace SanguineArchives.VBloodRecords.Data;
+namespace SanguineArchives.VBloodArchives.Data;
 
 public class VBloodCollectionData
 {

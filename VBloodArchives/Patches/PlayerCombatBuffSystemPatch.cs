@@ -4,7 +4,7 @@ using Stunlock.Core;
 using Unity.Collections;
 using Unity.Entities;
 
-namespace SanguineArchives.VBloodRecords.Patches;
+namespace SanguineArchives.VBloodArchives.Patches;
 
 [HarmonyPatch]
 internal static class PlayerCombatBuffSystemPatch
