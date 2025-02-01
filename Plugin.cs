@@ -10,9 +10,9 @@ using System.IO;
 
 using Bloody.Core;
 using Bloody.Core.API.v1;
-using SanguineArchives.BloodyNotify.AutoAnnouncer;
-using SanguineArchives.BloodyNotify.DB;
-using SanguineArchives.BloodyNotify.Systems;
+using SanguineArchives.Common.BloodyNotify.AutoAnnouncer;
+using SanguineArchives.Common.BloodyNotify.DB;
+using SanguineArchives.Common.BloodyNotify.Systems;
 
 namespace SanguineArchives;
 
@@ -101,7 +101,7 @@ public class Plugin : BasePlugin
 
         if (!Directory.Exists(ConfigPath)) Directory.CreateDirectory(ConfigPath);
 
-        SanguineArchives.BloodyNotify.DB.Config.CheckAndCreateConfigs();
+        SanguineArchives.Common.BloodyNotify.DB.Config.CheckAndCreateConfigs();
     }
     
     public void OnGameInitialized()

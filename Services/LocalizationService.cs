@@ -43,7 +43,7 @@ namespace SanguineArchives.Services
 
         void LoadLocalization()
         {
-            var resourceName = "SanguineArchives.Data.English.json";
+            var resourceName = "SanguineArchives.Common.KindredCommands.Data.English.json";
 
             var assembly = Assembly.GetExecutingAssembly();
             var stream = assembly.GetManifestResourceStream(resourceName);
@@ -64,7 +64,7 @@ namespace SanguineArchives.Services
 
         void LoadPrefabNames()
         {
-            var resourceName = "SanguineArchives.Data.PrefabNames.json";
+            var resourceName = "SanguineArchives.Common.KindredCommands.Data.PrefabNames.json";
 
             var assembly = Assembly.GetExecutingAssembly();
             var stream = assembly.GetManifestResourceStream(resourceName);

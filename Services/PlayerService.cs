@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using SanguineArchives.Models;
-using ProjectM;
+using SanguineArchives.Common.KindredCommands.Models;
+using SanguineArchives.Common.Utils;
 using ProjectM.Network;
 using Unity.Collections;
 using Unity.Entities;

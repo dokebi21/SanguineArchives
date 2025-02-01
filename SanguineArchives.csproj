@@ -23,7 +23,7 @@
     <PackageReference Include="Bloody.Core" Version="1.2.4" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="BloodyNotify\" />
+    <Folder Include="Common\KindredCommands\" />
   </ItemGroup>
   <PropertyGroup>
     <CopyTargetDir>C:\Program Files (x86)\Steam\steamapps\common\VRisingDedicatedServer\BepInEx\plugins</CopyTargetDir>

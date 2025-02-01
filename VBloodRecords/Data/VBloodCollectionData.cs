@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using SanguineArchives.Data;
+using SanguineArchives.Common.KindredCommands.Data;
 using Stunlock.Core;
 
 namespace SanguineArchives.VBloodRecords.Data;

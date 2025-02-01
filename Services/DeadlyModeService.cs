@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
-using SanguineArchives.Data;
+using SanguineArchives.Common.KindredCommands.Data;
+using SanguineArchives.Common.Utils;
 using ProjectM;
 using Unity.Entities;
 

@@ -5,7 +5,7 @@ using ProjectM.Gameplay.Systems;
 using Unity.Collections;
 using Unity.Entities;
 using System.Collections;
-using SanguineArchives.BloodyNotify.Systems;
+using SanguineArchives.Common.BloodyNotify.Systems;
 using SanguineArchives.VBloodRecords.Services;
 using Stunlock.Core;
 

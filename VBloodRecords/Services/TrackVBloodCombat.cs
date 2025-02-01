@@ -4,9 +4,10 @@ using System.Collections.Generic;
 using ProjectM;
 using System;
 using System.Linq;
-using SanguineArchives.BloodyNotify.Systems;
+using SanguineArchives.Common.BloodyNotify.Systems;
 using Unity.Entities;
-using SanguineArchives.BloodyNotify.DB;
+using SanguineArchives.Common.BloodyNotify.DB;
+using SanguineArchives.Common.Utils;
 
 namespace SanguineArchives.VBloodRecords.Services;
 

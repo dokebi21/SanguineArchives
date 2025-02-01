@@ -3,8 +3,8 @@ using ProjectM;
 using Stunlock.Core;
 using Unity.Collections;
 using Unity.Entities;
-using SanguineArchives.VBloodRecords.Data;
 
+using SanguineArchives.Common.KindredCommands.Data;
 namespace SanguineArchives.Patches;
 
 [HarmonyPatch(typeof(BuffSystem_Spawn_Server), nameof(BuffSystem_Spawn_Server.OnUpdate))]
@@ -23,7 +23,7 @@ public static class BuffSystem_Spawn_ServerPatch
 			Entity owner = buffEntity.Read<EntityOwner>().Owner;
 			if (!owner.Has<PlayerCharacter>()) continue;
 			if (!Core.DeadlyModeService.IsDeadlyModePlayer(owner)) continue;
-			if (prefabGUID == Data.Prefabs.DeadlyModeBuff)
+			if (prefabGUID == Prefabs.DeadlyModeBuff)
 			{
 				Core.DeadlyModeService.UpdateDeadlyModeBuff(buffEntity);
 			}
