@@ -5,7 +5,7 @@ using Stunlock.Core;
 using Unity.Collections;
 using SanguineArchives.VBloodArchives.Data;
 
-namespace SanguineArchives.Common.BloodyNotify.Patches;
+namespace SanguineArchives.VBloodArchives.Patches;
 
 [HarmonyPatch(typeof(UpdateBuffsBuffer_Destroy), nameof(UpdateBuffsBuffer_Destroy.OnUpdate))]
 internal class UpdateBuffsBuffer_DestroyPatch
