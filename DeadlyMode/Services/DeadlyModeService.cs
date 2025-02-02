@@ -5,7 +5,7 @@ using SanguineArchives.Common.Utils;
 using ProjectM;
 using Unity.Entities;
 
-namespace SanguineArchives.Services
+namespace SanguineArchives.DeadlyMode.Services
 {
 	internal class DeadlyModeService
 	{

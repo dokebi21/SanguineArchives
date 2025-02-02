@@ -10,7 +10,7 @@ using Unity.Transforms;
 using UnityEngine;
 using VampireCommandFramework;
 
-namespace SanguineArchives.Common.Commands;
+namespace SanguineArchives.DeadlyMode.Commands;
 
 internal class DeadlyModeCommands
 {
