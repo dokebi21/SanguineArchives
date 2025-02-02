@@ -5,7 +5,8 @@ using Unity.Collections;
 using Unity.Entities;
 
 using SanguineArchives.Common.KindredCommands.Data;
-namespace SanguineArchives.Patches;
+
+namespace SanguineArchives.DeadlyMode.Patches;
 
 [HarmonyPatch(typeof(BuffSystem_Spawn_Server), nameof(BuffSystem_Spawn_Server.OnUpdate))]
 public static class BuffSystem_Spawn_ServerPatch
