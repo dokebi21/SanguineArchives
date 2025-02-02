@@ -23,7 +23,7 @@ internal static class PlayerCombatBuffSystemPatch
                 if (!inverseAggroEvent.Producer.Has<PlayerCharacter>()) continue;
                 if (!inverseAggroEvent.Consumer.Has<VBloodUnit>()) continue;
                 var vbloodPrefabGUID = inverseAggroEvent.Consumer.Read<PrefabGUID>();
-                var vbloodString = Plugin.SystemsCore.PrefabCollectionSystem.PrefabGuidToNameDictionary[vbloodPrefabGUID];
+                var vbloodString = Core.PrefabCollectionSystem.PrefabGuidToNameDictionary[vbloodPrefabGUID];
                 Core.TrackVBloodCombat.StartTrackingForVBlood(vbloodString, ref inverseAggroEvent.Producer, ref inverseAggroEvent.Consumer);
                 Core.Log.LogInfo($"PlayerCombatBuffSystemPatch: Start Tracking {vbloodString} for {inverseAggroEvent.Producer}...");
             }

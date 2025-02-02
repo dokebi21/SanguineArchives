@@ -1,16 +1,8 @@
 using System;
-using Bloody.Core.API.v1;
-using Bloody.Core.GameData.v1;
-using Bloody.Core;
 using SanguineArchives.Common.BloodyNotify.DB;
 using SanguineArchives.Common.Commands.Converters;
-using SanguineArchives.Common.KindredCommands.Models;
 using ProjectM.Network;
-using ProjectM;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Bloody.Core.Utils.v1;
 using SanguineArchives.VBloodArchives.Data;
 using SanguineArchives.Common.Utils;
 using VampireCommandFramework;
@@ -33,7 +25,7 @@ public class VBloodRecordsCommand
     [Command("vbloodrecordsboss", "vbrb", description: "Show records for a V Blood boss", adminOnly: false)]
     public static void ShowVBloodRecords(ChatCommandContext ctx, FoundVBlood foundVBlood)
     {
-        var vblood = Plugin.SystemsCore.PrefabCollectionSystem.PrefabGuidToNameDictionary[foundVBlood.Value];
+        var vblood = Core.PrefabCollectionSystem.PrefabGuidToNameDictionary[foundVBlood.Value];
         var vbloodLabel = ChatColor.Purple(Database.getPrefabNameValue(vblood));
         List<VBloodRecord> topRecords = Core.VBloodRecordsService.GetRecordsForVBlood(vblood);
         

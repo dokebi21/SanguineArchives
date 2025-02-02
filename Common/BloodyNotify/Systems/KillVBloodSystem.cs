@@ -20,8 +20,8 @@ namespace SanguineArchives.Common.BloodyNotify.Systems
     {
         private const double SendMessageDelay = 2;
         public static Dictionary<string, HashSet<string>> vbloodKills = new();
-        private static EntityManager _entityManager = Plugin.SystemsCore.EntityManager;
-        private static PrefabCollectionSystem _prefabCollectionSystem = Plugin.SystemsCore.PrefabCollectionSystem;
+        private static EntityManager _entityManager = Core.EntityManager;
+        private static PrefabCollectionSystem _prefabCollectionSystem = Core.PrefabCollectionSystem;
         private static bool checkKiller = false;
         private static Dictionary<string, DateTime> lastKillerUpdate = new();
         public static Dictionary<string, float> combatDuration = new();
@@ -30,8 +30,6 @@ namespace SanguineArchives.Common.BloodyNotify.Systems
 
         public static void OnDetahVblood(VBloodSystem sender, NativeList<VBloodConsumed> deathEvents)
         {
-            if(!Database.EnabledFeatures[NotifyFeature.vblood]) { return; }
-
             if (deathEvents.Length > 0)
             {
                 foreach (var event_vblood in deathEvents)

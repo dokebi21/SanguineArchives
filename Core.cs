@@ -24,7 +24,7 @@ internal static class Core
     public static ServerGameManager ServerGameManager => ServerScriptMapper.GetServerGameManager();
     public static ServerGameSettingsSystem ServerGameSettingsSystem { get; internal set; }
 
-    public static ManualLogSource Log { get; } = Plugin.PluginLog;
+    public static ManualLogSource Log { get; } = Plugin.LogInstance;
     
     static MonoBehaviour monoBehaviour;
     
