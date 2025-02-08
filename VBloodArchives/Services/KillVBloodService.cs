@@ -1,6 +1,4 @@
 ﻿using Bloodstone.API;
-using Bloody.Core.GameData.v1;
-using SanguineArchives.Common.BloodyNotify.DB;
 using ProjectM;
 using System.Collections.Generic;
 using System.Linq;
@@ -173,10 +171,11 @@ namespace SanguineArchives.VBloodArchives.Services
          */
         public void SendVBloodMessageToAll(string message)
         {
-            var usersOnline = GameData.Users.Online;
+            var usersOnline = PlayerService.GetUsersOnline();
             foreach (var user in usersOnline)
             {
-                ServerChatUtils.SendSystemMessageToClient(VWorld.Server.EntityManager, user.Internals.User.Value, ChatColor.Gray(message));
+                Player player = new(user);
+                ServerChatUtils.SendSystemMessageToClient(VWorld.Server.EntityManager, player.User.Read<User>(), ChatColor.Gray(message));
             }
         }
 
@@ -185,12 +184,13 @@ namespace SanguineArchives.VBloodArchives.Services
          */
         public void SendVBloodMessageToPlayers(List<string> players, string message)
         {
-            var usersOnline = GameData.Users.Online;
+            var usersOnline = PlayerService.GetUsersOnline();
             foreach (var user in usersOnline)
             {
-                if (players.Contains(user.CharacterName))
+                Player player = new(user);
+                if (players.Contains(player.Name))
                 {
-                    ServerChatUtils.SendSystemMessageToClient(VWorld.Server.EntityManager, user.Internals.User.Value, ChatColor.Gray(message));
+                    ServerChatUtils.SendSystemMessageToClient(VWorld.Server.EntityManager, player.User.Read<User>(), ChatColor.Gray(message));
                 }
             }
         }

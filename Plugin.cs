@@ -4,8 +4,6 @@ using BepInEx.Unity.IL2CPP;
 using HarmonyLib;
 using VampireCommandFramework;
 
-using SanguineArchives.Common.BloodyNotify.DB;
-
 namespace SanguineArchives;
 
 [BepInPlugin(MyPluginInfo.PLUGIN_GUID, MyPluginInfo.PLUGIN_NAME, MyPluginInfo.PLUGIN_VERSION)]

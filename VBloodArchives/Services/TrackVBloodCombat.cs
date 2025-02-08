@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using ProjectM;
 using System;
 using System.Linq;
-using SanguineArchives.Common.BloodyNotify.DB;
 
 namespace SanguineArchives.VBloodArchives.Services;
 
