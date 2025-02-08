@@ -11,7 +11,7 @@ internal static class PlayerCombatBuffSystemPatch
 {
     [HarmonyPatch(typeof(PlayerCombatBuffSystem_OnAggro), nameof(PlayerCombatBuffSystem_OnAggro.OnUpdate))]
     [HarmonyPrefix]
-    static void OnUpdatePrefix(PlayerCombatBuffSystem_OnAggro __instance)
+    static void OnUpdate_Prefix(PlayerCombatBuffSystem_OnAggro __instance)
     {
         NativeArray<Entity> entities = __instance.EntityQueries[0].ToEntityArray(Allocator.Temp);
         try
@@ -36,7 +36,7 @@ internal static class PlayerCombatBuffSystemPatch
 
     [HarmonyPatch(typeof(PlayerCombatBuffSystem_Reapplication), nameof(PlayerCombatBuffSystem_Reapplication.OnUpdate))]
     [HarmonyPrefix]
-    static void OnUpdatePrefix(PlayerCombatBuffSystem_Reapplication __instance)
+    static void OnUpdate_Prefix(PlayerCombatBuffSystem_Reapplication __instance)
     {
 
     }

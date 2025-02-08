@@ -1,81 +1,39 @@
 ﻿using Bloodstone.API;
 using Bloody.Core.GameData.v1;
 using SanguineArchives.Common.BloodyNotify.DB;
-using SanguineArchives.Common.Utils;
-using SanguineArchives.VBloodArchives.Services;
-using ProjectM.Network;
 using ProjectM;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System;
-using Unity.Collections;
-using Unity.Entities;
 
-namespace SanguineArchives.Common.BloodyNotify.Systems
+namespace SanguineArchives.VBloodArchives.Services
 {
-    internal class KillVBloodSystem
+    internal class KillVBloodService
     {
-        private const double SendMessageDelay = 2;
-        public static Dictionary<string, HashSet<string>> vbloodKills = new();
-        private static EntityManager _entityManager = Core.EntityManager;
-        private static PrefabCollectionSystem _prefabCollectionSystem = Core.PrefabCollectionSystem;
-        private static bool checkKiller = false;
-        private static Dictionary<string, DateTime> lastKillerUpdate = new();
-        public static Dictionary<string, float> combatDuration = new();
-        public static Dictionary<string, Dictionary<string, float>> maxPlayerLevels = new();
-        public static Dictionary<string, bool> startedWhileRecovering = new();
+        public Dictionary<string, HashSet<string>> vbloodKills = new();
+        private PrefabCollectionSystem _prefabCollectionSystem = Core.PrefabCollectionSystem;
+        public Dictionary<string, DateTime> lastKillerUpdate = new();
+        public Dictionary<string, float> combatDuration = new();
+        public Dictionary<string, Dictionary<string, float>> maxPlayerLevels = new();
+        public Dictionary<string, bool> startedWhileRecovering = new();
 
-        public static void OnDetahVblood(VBloodSystem sender, NativeList<VBloodConsumed> deathEvents)
-        {
-            if (deathEvents.Length > 0)
-            {
-                foreach (var event_vblood in deathEvents)
-                {
-                    if (_entityManager.HasComponent<PlayerCharacter>(event_vblood.Target))
-                    {
-                        var player = _entityManager.GetComponentData<PlayerCharacter>(event_vblood.Target);
-                        var user = _entityManager.GetComponentData<User>(player.UserEntity);
-                        var vbloodString = _prefabCollectionSystem.PrefabGuidToNameDictionary[event_vblood.Source];
-                        AddKiller(vbloodString.ToString(), user.CharacterName.ToString());
-                        lastKillerUpdate[vbloodString.ToString()] = DateTime.Now;
-                        checkKiller = true;
-                    }
-                }
-            }
-            else if (checkKiller)
-            {
-                var didSkip = false;
-                foreach (KeyValuePair<string, DateTime> kvp in lastKillerUpdate)
-                {
-                    var lastUpdateTime = kvp.Value;
-                    if (DateTime.Now - lastUpdateTime < TimeSpan.FromSeconds(SendMessageDelay))
-                    {
-                        didSkip = true;
-                        continue;
-                    }
-                    AnnounceVBloodKill(kvp.Key);
-                }
-                checkKiller = didSkip;
-            }
-        }
-
-        public static void SetCombatDuration(string vblood, float duration)
+        public void SetCombatDuration(string vblood, float duration)
         {
             combatDuration[vblood] = duration;
         }
-        
-        public static void SetMaxPlayerLevels(string vblood, Dictionary<string, float> playerLevels)
+
+        public void SetMaxPlayerLevels(string vblood, Dictionary<string, float> playerLevels)
         {
             maxPlayerLevels[vblood] = playerLevels;
         }
 
-        public static void ResetStartedWhileRecovering(string vblood)
+        public void ResetStartedWhileRecovering(string vblood)
         {
             startedWhileRecovering.Remove(vblood);
         }
 
-        public static void AddKiller(string vblood, string killerCharacterName)
+        public void AddKiller(string vblood, string killerCharacterName)
         {
             if (!vbloodKills.ContainsKey(vblood))
             {
@@ -84,7 +42,7 @@ namespace SanguineArchives.Common.BloodyNotify.Systems
             vbloodKills[vblood].Add(killerCharacterName);
         }
 
-        public static void RemoveKillers(string vblood)
+        public void RemoveKillers(string vblood)
         {
             vbloodKills[vblood] = new HashSet<string>();
             SetCombatDuration(vblood, 0);
@@ -92,15 +50,15 @@ namespace SanguineArchives.Common.BloodyNotify.Systems
             startedWhileRecovering.Remove(vblood);
         }
 
-        public static List<string> GetKillers(string vblood)
+        public List<string> GetKillers(string vblood)
         {
             return vbloodKills[vblood].ToList();
         }
-        
+
         /**
          * Player levels must not be above V Blood level during the fight.
          */
-        public static bool CheckPlayerLevelsDuringCombat(string vblood)
+        public bool CheckPlayerLevelsDuringCombat(string vblood)
         {
             var vbloodLevel = 0;
             if (Core.Prefabs.TryGetItem(vblood, out var prefabGuid))
@@ -110,7 +68,7 @@ namespace SanguineArchives.Common.BloodyNotify.Systems
                     vbloodLevel = prefabEntity.Read<UnitLevel>().Level;
                 }
             }
-            
+
             float maxLevel = -1;
             foreach (var (characterName, playerLevel) in maxPlayerLevels[vblood])
             {
@@ -119,13 +77,13 @@ namespace SanguineArchives.Common.BloodyNotify.Systems
             return maxLevel <= vbloodLevel;
         }
 
-        public static bool CheckStartedWhileRecovering(string vblood)
+        public bool CheckStartedWhileRecovering(string vblood)
         {
             Core.Log.LogInfo($"CheckStartedWhileRecovering: {startedWhileRecovering.ContainsKey(vblood)} vs {startedWhileRecovering.ContainsKey(vblood) && startedWhileRecovering[vblood]}");
             return startedWhileRecovering.ContainsKey(vblood) && startedWhileRecovering[vblood];
         }
 
-        public static void AnnounceVBloodKill(string vblood)
+        public void AnnounceVBloodKill(string vblood)
         {
             if (CheckIfBloodyBoss(vblood))
             {
@@ -137,15 +95,15 @@ namespace SanguineArchives.Common.BloodyNotify.Systems
                 RemoveKillers(vblood);
                 return;
             }
-            
+
             var killers = GetKillers(vblood);
-            
+
             if (killers.Count == 0)
             {
                 RemoveKillers(vblood);
                 return;
             }
-            
+
             combatDuration.TryGetValue(vblood, out var combatDurationSeconds);
             var killersLabel = ChatColor.Yellow(CombinedKillersLabel(vblood));
             var vbloodLabel = ChatColor.Purple(Database.getPrefabNameValue(vblood));
@@ -155,7 +113,7 @@ namespace SanguineArchives.Common.BloodyNotify.Systems
                 ChatColor.Green(
                     $"Congratulations to {killersLabel} for defeating {vbloodLabel} in {combatDurationSeconds:F2} seconds!");
             Core.Log.LogInfo($"AnnounceVBloodKill: VBlood {vblood} was killed by {killersLabel}!");
-            
+
             if (killers.Count == 1 && maxPlayerLevels[vblood].Count == 1)
             {
                 var newRecord = new VBloodRecord
@@ -178,7 +136,7 @@ namespace SanguineArchives.Common.BloodyNotify.Systems
                     RemoveKillers(vblood);
                     return;
                 }
-                
+
                 if (Core.VBloodRecordsService.IsNewTopRecord(vblood, newRecord))
                 {
                     SendVBloodMessageToAll(defaultCongratsMessage);
@@ -207,7 +165,7 @@ namespace SanguineArchives.Common.BloodyNotify.Systems
                         var difference = Core.VBloodRecordsService.GetCurrentPlayerRecord(vblood, newRecord.CharacterName) - combatDurationSeconds;
                         var differenceLabel = ChatColor.Green($"{difference:F2}");
                         var personalRecordSuffixLabel = $"Your new record is faster by {differenceLabel} seconds.";
-                        SendVBloodMessageToPlayers(killers, personalRecordSuffixLabel);    
+                        SendVBloodMessageToPlayers(killers, personalRecordSuffixLabel);
                     }
                 }
                 Core.VBloodRecordsService.AddRecord(vblood, newRecord);
@@ -223,9 +181,9 @@ namespace SanguineArchives.Common.BloodyNotify.Systems
         }
 
         /**
-         * Send message to all users who didn't turn off VBlood notifications. 
+         * Send message to all users who didn't turn off VBlood notifications.
          */
-        public static void SendVBloodMessageToAll(string message)
+        public void SendVBloodMessageToAll(string message)
         {
             var usersOnline = GameData.Users.Online;
             foreach (var user in usersOnline)
@@ -237,11 +195,11 @@ namespace SanguineArchives.Common.BloodyNotify.Systems
                 }
             }
         }
-        
+
         /**
          * Send message to killers who didn't turn off VBlood notifications.
          */
-        public static void SendVBloodMessageToPlayers(List<string> players, string message)
+        public void SendVBloodMessageToPlayers(List<string> players, string message)
         {
             var usersOnline = GameData.Users.Online;
             foreach (var user in usersOnline)
@@ -254,7 +212,7 @@ namespace SanguineArchives.Common.BloodyNotify.Systems
             }
         }
 
-        private static string CombinedKillersLabel(string vblood)
+        private string CombinedKillersLabel(string vblood)
         {
             var killers = GetKillers(vblood);
             var sbKillersLabel = new StringBuilder();
@@ -284,7 +242,7 @@ namespace SanguineArchives.Common.BloodyNotify.Systems
             return sbKillersLabel.ToString();
         }
 
-        private static bool CheckIfBloodyBoss(string vblood)
+        private bool CheckIfBloodyBoss(string vblood)
         {
             var entitiesQuery = Bloody.Core.Helper.v1.QueryComponents.GetEntitiesByComponentTypes<VBloodUnit, NameableInteractable, LifeTime>(EntityQueryOptions.Default, false);
             foreach (var entity in entitiesQuery)

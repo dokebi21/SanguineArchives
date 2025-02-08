@@ -271,7 +271,7 @@ internal static partial class Helper
 			}
 		}
 	}
-	
+
 	const float ReviveDelaySeconds = 20f;
 
 	public static void ReviveCharacter(Entity Character, Entity User, ChatCommandContext ctx = null)
@@ -291,7 +291,7 @@ internal static partial class Helper
 		}
 		ReviveCharacterNow(Character, User, ctx);
     }
-	
+
 	public static void ReviveCharacterNow(Entity Character, Entity User, ChatCommandContext ctx = null)
 	{
 		var health = Character.Read<Health>();
@@ -301,7 +301,7 @@ internal static partial class Helper
 			health.Value = health.MaxHealth;
 			health.MaxRecoveryHealth = health.MaxHealth;
 			Character.Write(health);
-			ctx.Reply($"Revived {User.Read<User>().CharacterName}");		
+			ctx.Reply($"Revived {User.Read<User>().CharacterName}");
 		}
 		if (health.IsDead)
 		{
@@ -376,7 +376,7 @@ internal static partial class Helper
 			}
 		}
 	}
-	
+
 	public static bool IsPlayerInCombat(Entity player)
 	{
 		return BuffUtility.HasBuff(Core.EntityManager, player, Prefabs.Buff_InCombat) || BuffUtility.HasBuff(Core.EntityManager, player, Prefabs.Buff_InCombat_PvPVampire);

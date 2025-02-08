@@ -3,9 +3,7 @@ using ProjectM;
 using ProjectM.Behaviours;
 using ProjectM.Gameplay.Systems;
 using Unity.Collections;
-using Unity.Entities;
 using System.Collections;
-using SanguineArchives.Common.BloodyNotify.Systems;
 using SanguineArchives.VBloodArchives.Services;
 using Stunlock.Core;
 
@@ -42,7 +40,7 @@ internal static class BehaviorStateChangedSystemPatch
             entities.Dispose();
         }
     }
-    
+
     static IEnumerator WaitForFullRecovery(string vbloodString, Entity vbloodEntity)
     {
         var health = vbloodEntity.Read<Health>();

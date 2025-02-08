@@ -2,13 +2,9 @@
 using BepInEx.Logging;
 using BepInEx.Unity.IL2CPP;
 using HarmonyLib;
-using UnityEngine;
-using Unity.Entities;
 using VampireCommandFramework;
 
-using Bloody.Core.API.v1;
 using SanguineArchives.Common.BloodyNotify.DB;
-using SanguineArchives.Common.BloodyNotify.Systems;
 
 namespace SanguineArchives;
 
@@ -37,13 +33,7 @@ public class Plugin : BasePlugin
         // Register all commands in the assembly with VCF
         CommandRegistry.RegisterAll();
 
-        EventsHandlerSystem.OnInitialize += GameDataOnInitialize;
         LoadDatabase.LoadAllConfig();
-    }
-
-    private void GameDataOnInitialize(World world)
-    {
-        EventsHandlerSystem.OnDeathVBlood += KillVBloodSystem.OnDetahVblood;
     }
 
     public override bool Unload()

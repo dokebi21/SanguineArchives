@@ -4,10 +4,7 @@ using System.Collections.Generic;
 using ProjectM;
 using System;
 using System.Linq;
-using SanguineArchives.Common.BloodyNotify.Systems;
-using Unity.Entities;
 using SanguineArchives.Common.BloodyNotify.DB;
-using SanguineArchives.Common.Utils;
 
 namespace SanguineArchives.VBloodArchives.Services;
 
@@ -16,7 +13,7 @@ public class TrackVBloodCombat
 	// For each vblood in combat, keep track of the levels of aggro'd players. O(numVBlood * numPlayers)
 	readonly Dictionary<string, Dictionary<string, float>> vbloodPlayerLevels = new();
 	public static Dictionary<string, bool> vbloodStillRecovering = new();
-	
+
     public TrackVBloodCombat()
     {
         Core.StartCoroutine(MonitorForPlayerLevels());
@@ -45,7 +42,7 @@ public class TrackVBloodCombat
 		    // More than 1 player fighting. Send warning about not recording fight.
 		    var msg = $"Your fight with {vbloodLabel} will not be recorded. {ChatColor.Yellow(characterName)} joined the fight.";
 		    // var msg = $"Fight not recorded. {ChatColor.Yellow(characterName)} joined the fight against {vbloodLabel}.";
-		    KillVBloodSystem.SendVBloodMessageToPlayers(vbloodPlayerLevels[vblood].Keys.ToList(), msg);
+		    Core.KillVBloodService.SendVBloodMessageToPlayers(vbloodPlayerLevels[vblood].Keys.ToList(), msg);
 	    }
 	    else
 	    {
@@ -61,29 +58,29 @@ public class TrackVBloodCombat
 				    {
 					    var msg = $"Your fight with {vbloodLabel} will not be recorded. Your level is too high.";
 					    // var msg = $"Fight not recorded. Your level is higher than {vbloodLabel}.";
-					    KillVBloodSystem.SendVBloodMessageToPlayers([characterName], msg);
+					    Core.KillVBloodService.SendVBloodMessageToPlayers([characterName], msg);
 				    }
 				    else
 				    {
 					    if (vbloodStillRecovering.ContainsKey(vblood) && vbloodStillRecovering[vblood])
 					    {
-						    KillVBloodSystem.startedWhileRecovering[vblood] = true;
+						    Core.KillVBloodService.startedWhileRecovering[vblood] = true;
 							var msg = $"Your fight with {vbloodLabel} will not be recorded. Enemy not fully recovered yet.";
-						    KillVBloodSystem.SendVBloodMessageToPlayers([characterName], msg);
+						    Core.KillVBloodService.SendVBloodMessageToPlayers([characterName], msg);
 					    }
 					    else
 					    {
-						    KillVBloodSystem.startedWhileRecovering[vblood] = false;
+						    Core.KillVBloodService.startedWhileRecovering[vblood] = false;
 						    var msg = $"Your fight with {vbloodLabel} started. Good luck!";
 						    // var msg = $"Fight started. Good luck against {vbloodLabel}!";
-						    KillVBloodSystem.SendVBloodMessageToPlayers([characterName], msg);
+						    Core.KillVBloodService.SendVBloodMessageToPlayers([characterName], msg);
 					    }
 				    }
 			    }
 		    }
 	    }
     }
-    
+
     public void StopTrackingForVBlood(string vblood, bool isDead)
     {
 	    if (vbloodPlayerLevels.ContainsKey(vblood))
@@ -93,13 +90,13 @@ public class TrackVBloodCombat
 			    var vbloodLabel = ChatColor.Purple(Database.getPrefabNameValue(vblood));
 			    var msg = $"Your fight with {vbloodLabel} ended. Aggro was reset.";
 			    // var msg = $"Fight ended. Aggro was lost for {vbloodLabel}.";
-			    KillVBloodSystem.SendVBloodMessageToPlayers(vbloodPlayerLevels[vblood].Keys.ToList(), msg);			    
+			    Core.KillVBloodService.SendVBloodMessageToPlayers(vbloodPlayerLevels[vblood].Keys.ToList(), msg);
 		    }
-			KillVBloodSystem.SetMaxPlayerLevels(vblood, new Dictionary<string, float>(vbloodPlayerLevels[vblood]));
+			Core.KillVBloodService.SetMaxPlayerLevels(vblood, new Dictionary<string, float>(vbloodPlayerLevels[vblood]));
 			vbloodPlayerLevels.Remove(vblood);
 	    }
     }
-    
+
     IEnumerator MonitorForPlayerLevels()
 	{
 		while(true)
@@ -127,7 +124,7 @@ public class TrackVBloodCombat
 										var vbloodLabel = ChatColor.Purple(Database.getPrefabNameValue(vblood));
 										var msg = $"Your fight with {vbloodLabel} will not be recorded. A player level is too high ({ChatColor.Yellow(user.CharacterName)}).";
 										// var msg = $"Fight not recorded. Player level ({ChatColor.Yellow(user.CharacterName)}) is higher than {vbloodLabel}.";
-										KillVBloodSystem.SendVBloodMessageToPlayers(vbloodPlayerLevels[vblood].Keys.ToList(), msg);
+										Core.KillVBloodService.SendVBloodMessageToPlayers(vbloodPlayerLevels[vblood].Keys.ToList(), msg);
 									}
 								}
 							}

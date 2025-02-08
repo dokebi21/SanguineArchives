@@ -24,12 +24,11 @@ internal static class Core
     public static ServerGameSettingsSystem ServerGameSettingsSystem { get; internal set; }
 
     public static ManualLogSource Log { get; } = Plugin.LogInstance;
-    
+
     static MonoBehaviour monoBehaviour;
-    
+
     public const int MAX_REPLY_LENGTH = 509;
-    
-        
+
     // Services
     public static LocalizationService Localization { get; } = new();
     public static PlayerService Players { get; internal set; }
@@ -37,8 +36,9 @@ internal static class Core
     public static DeadlyModeService DeadlyModeService { get; internal set; }
     public static VBloodRecordsService VBloodRecordsService { get; internal set; }
     public static TrackVBloodCombat TrackVBloodCombat { get; internal set; }
+    public static KillVBloodService KillVBloodService { get; internal set; }
 
-    
+
     public static void LogException(System.Exception e, [CallerMemberName] string caller = null)
     {
         Core.Log.LogError($"Failure in {caller}\nMessage: {e.Message} Inner:{e.InnerException?.Message}\n\nStack: {e.StackTrace}\nInner Stack: {e.InnerException?.StackTrace}");
@@ -58,12 +58,13 @@ internal static class Core
         DeadlyModeService = new();
         VBloodRecordsService = new();
         TrackVBloodCombat = new();
+        KillVBloodService = new();
 
         _hasInitialized = true;
         Log.LogInfo($"{nameof(InitializeAfterLoaded)} completed");
     }
     private static bool _hasInitialized = false;
-    
+
     private static World GetWorld(string name)
     {
         foreach (var world in World.s_AllWorlds)
@@ -76,7 +77,7 @@ internal static class Core
 
         return null;
     }
-    
+
     public static Coroutine StartCoroutine(IEnumerator routine)
     {
         if (monoBehaviour == null)

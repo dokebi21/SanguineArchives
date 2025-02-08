@@ -1,4 +1,3 @@
-using SanguineArchives.Common.BloodyNotify.Systems;
 using HarmonyLib;
 using ProjectM;
 using Stunlock.Core;
@@ -23,7 +22,7 @@ internal class UpdateBuffsBuffer_DestroyPatch
                 var targetPrefabGUID = buff.Target.Read<PrefabGUID>();
                 var vbloodString = Core.PrefabCollectionSystem.PrefabGuidToNameDictionary[targetPrefabGUID];
                 var isDead = buff.Target.Read<Health>().IsDead;
-                KillVBloodSystem.SetCombatDuration(vbloodString, age.Value);
+                Core.KillVBloodService.SetCombatDuration(vbloodString, age.Value);
                 Core.TrackVBloodCombat.StopTrackingForVBlood(vbloodString, isDead);
                 Core.Log.LogInfo($"UpdateBuffsBuffer_Destroy: Stop Tracking {vbloodString}...");
             }
