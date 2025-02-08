@@ -32,8 +32,6 @@ public class Plugin : BasePlugin
 
         // Register all commands in the assembly with VCF
         CommandRegistry.RegisterAll();
-
-        LoadDatabase.LoadAllConfig();
     }
 
     public override bool Unload()

@@ -83,12 +83,12 @@ public static class ECSExtensions
 	{
 		var prefabCollectionSystem = Core.Server.GetExistingSystemManaged<PrefabCollectionSystem>();
 		return (prefabCollectionSystem.PrefabGuidToNameDictionary.ContainsKey(prefabGuid)
-			? prefabCollectionSystem.PrefabGuidToNameDictionary[prefabGuid] + " " + prefabGuid : "GUID Not Found").ToString();
+			? prefabCollectionSystem.PrefabGuidToNameDictionary[prefabGuid] : "GUID Not Found").ToString();
 	}
 
 	public static string GetPrefabName(this PrefabGUID prefabGuid)
 	{
-		return Core.PrefabCollectionSystem.PrefabGuidToNameDictionary.TryGetValue(prefabGuid, out string prefabName) ? $"{prefabName} {prefabGuid}" : "String.Empty";
+		return Core.PrefabCollectionSystem.PrefabGuidToNameDictionary.TryGetValue(prefabGuid, out string prefabName) ? $"{prefabName}" : "String.Empty";
 	}
 
 	public static string GetLocalizedName(this PrefabGUID prefabGuid)

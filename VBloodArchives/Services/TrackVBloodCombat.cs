@@ -38,7 +38,8 @@ public class TrackVBloodCombat
 
 	    if (vbloodPlayerLevels[vblood].Count > 1)
 	    {
-		    var vbloodLabel = ChatColor.Purple(Database.getPrefabNameValue(vblood));
+		    if (!Core.Prefabs.TryGetItem(vblood, out var vbloodPrefab)) return;
+		    var vbloodLabel = ChatColor.Purple(vbloodPrefab.GetLocalizedName());
 		    // More than 1 player fighting. Send warning about not recording fight.
 		    var msg = $"Your fight with {vbloodLabel} will not be recorded. {ChatColor.Yellow(characterName)} joined the fight.";
 		    // var msg = $"Fight not recorded. {ChatColor.Yellow(characterName)} joined the fight against {vbloodLabel}.";
@@ -52,7 +53,8 @@ public class TrackVBloodCombat
 			    if (Core.PrefabCollectionSystem._PrefabLookupMap.TryGetValue(prefabGuid, out var prefabEntity))
 			    {
 				    vbloodLevel = prefabEntity.Read<UnitLevel>().Level;
-				    var vbloodLabel = ChatColor.Purple(Database.getPrefabNameValue(vblood));
+				    if (!Core.Prefabs.TryGetItem(vblood, out var vbloodPrefab)) return;
+				    var vbloodLabel = ChatColor.Purple(vbloodPrefab.GetLocalizedName());
 				    var userMaxLevel = vbloodPlayerLevels[vblood][user.CharacterName];
 				    if (userMaxLevel > vbloodLevel)
 				    {
@@ -87,7 +89,8 @@ public class TrackVBloodCombat
 	    {
 		    if (!isDead)
 		    {
-			    var vbloodLabel = ChatColor.Purple(Database.getPrefabNameValue(vblood));
+			    if (!Core.Prefabs.TryGetItem(vblood, out var vbloodPrefab)) return;
+			    var vbloodLabel = ChatColor.Purple(vbloodPrefab.GetLocalizedName());
 			    var msg = $"Your fight with {vbloodLabel} ended. Aggro was reset.";
 			    // var msg = $"Fight ended. Aggro was lost for {vbloodLabel}.";
 			    Core.KillVBloodService.SendVBloodMessageToPlayers(vbloodPlayerLevels[vblood].Keys.ToList(), msg);
@@ -121,7 +124,8 @@ public class TrackVBloodCombat
 									// Check if level was previously fine.
 									if (cachedLevel <= vbloodLevel && currentLevel > vbloodLevel)
 									{
-										var vbloodLabel = ChatColor.Purple(Database.getPrefabNameValue(vblood));
+										if (!Core.Prefabs.TryGetItem(vblood, out var vbloodPrefab)) break;
+										var vbloodLabel = ChatColor.Purple(vbloodPrefab.GetLocalizedName());
 										var msg = $"Your fight with {vbloodLabel} will not be recorded. A player level is too high ({ChatColor.Yellow(user.CharacterName)}).";
 										// var msg = $"Fight not recorded. Player level ({ChatColor.Yellow(user.CharacterName)}) is higher than {vbloodLabel}.";
 										Core.KillVBloodService.SendVBloodMessageToPlayers(vbloodPlayerLevels[vblood].Keys.ToList(), msg);

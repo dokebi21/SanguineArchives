@@ -95,7 +95,8 @@ namespace SanguineArchives.VBloodArchives.Services
 
             combatDuration.TryGetValue(vblood, out var combatDurationSeconds);
             var killersLabel = ChatColor.Yellow(CombinedKillersLabel(vblood));
-            var vbloodLabel = ChatColor.Purple(Database.getPrefabNameValue(vblood));
+            if (!Core.Prefabs.TryGetItem(vblood, out var vbloodPrefab)) return;
+            var vbloodLabel = ChatColor.Purple(vbloodPrefab.GetLocalizedName());
             // var basePrefixLabel = ChatColor.Green("Congratulations!");
             // var baseSuffixLabel = $"{vbloodLabel} was defeated by {killersLabel} in {combatDurationSeconds:F2} seconds!";
             var defaultCongratsMessage =
@@ -163,8 +164,6 @@ namespace SanguineArchives.VBloodArchives.Services
             {
                 // More than 1 killer or fighter.
                 SendVBloodMessageToAll(defaultCongratsMessage);
-                // var notRecordedLabel = Database.getDefaultAnnounceValue("VBloodRecords_CoopNotRecorded");
-                // SendVBloodMessageToPlayers(killers, FontColorChatSystem.Gray($"{notRecordedLabel}"));
             }
             RemoveKillers(vblood);
         }
@@ -177,11 +176,7 @@ namespace SanguineArchives.VBloodArchives.Services
             var usersOnline = GameData.Users.Online;
             foreach (var user in usersOnline)
             {
-                var isUserIgnore = Database.getVBloodNotifyIgnore(user.CharacterName);
-                if (!isUserIgnore)
-                {
-                    ServerChatUtils.SendSystemMessageToClient(VWorld.Server.EntityManager, user.Internals.User.Value, ChatColor.Gray(message));
-                }
+                ServerChatUtils.SendSystemMessageToClient(VWorld.Server.EntityManager, user.Internals.User.Value, ChatColor.Gray(message));
             }
         }
 
@@ -193,8 +188,7 @@ namespace SanguineArchives.VBloodArchives.Services
             var usersOnline = GameData.Users.Online;
             foreach (var user in usersOnline)
             {
-                var isUserIgnore = Database.getVBloodNotifyIgnore(user.CharacterName);
-                if (!isUserIgnore && players.Contains(user.CharacterName))
+                if (players.Contains(user.CharacterName))
                 {
                     ServerChatUtils.SendSystemMessageToClient(VWorld.Server.EntityManager, user.Internals.User.Value, ChatColor.Gray(message));
                 }
@@ -212,7 +206,7 @@ namespace SanguineArchives.VBloodArchives.Services
             }
             if (killers.Count == 2)
             {
-                sbKillersLabel.Append($"{ChatColor.Yellow(killers[0])} {Database.getVBloodFinalConcatCharacters()} {ChatColor.Yellow(killers[1])}");
+                sbKillersLabel.Append($"{ChatColor.Yellow(killers[0])} and {ChatColor.Yellow(killers[1])}");
             }
             if (killers.Count > 2)
             {
@@ -220,7 +214,7 @@ namespace SanguineArchives.VBloodArchives.Services
                 {
                     if (i == killers.Count - 1)
                     {
-                        sbKillersLabel.Append($"{Database.getVBloodFinalConcatCharacters()} {ChatColor.Yellow(killers[i])}");
+                        sbKillersLabel.Append($"and {ChatColor.Yellow(killers[i])}");
                     }
                     else
                     {
