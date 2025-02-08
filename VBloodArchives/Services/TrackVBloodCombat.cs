@@ -1,4 +1,3 @@
-using Bloody.Core.GameData.v1;
 using System.Collections;
 using System.Collections.Generic;
 using ProjectM;
@@ -25,14 +24,16 @@ public class TrackVBloodCombat
 		    vbloodPlayerLevels[vblood] = new();
 	    }
 	    var characterName = playerEntity.Read<PlayerCharacter>().Name.ToString();
-	    var user = GameData.Users.GetUserByCharacterName(characterName);
-	    if (vbloodPlayerLevels[vblood].ContainsKey(user.CharacterName))
+	    var userEntity = playerEntity.Read<PlayerCharacter>().UserEntity;
+	    var player = new Player(userEntity);
+	    var playerLevel = Helper.GetPlayerEquipmentLevel(player);
+	    if (vbloodPlayerLevels[vblood].ContainsKey(player.Name))
 	    {
-		    vbloodPlayerLevels[vblood][user.CharacterName] = Math.Max(vbloodPlayerLevels[vblood][user.CharacterName], user.Equipment.Level);
+		    vbloodPlayerLevels[vblood][player.Name] = Math.Max(vbloodPlayerLevels[vblood][player.Name], playerLevel);
 	    }
 	    else
 	    {
-			vbloodPlayerLevels[vblood][user.CharacterName] = user.Equipment.Level;
+			vbloodPlayerLevels[vblood][player.Name] = playerLevel;
 	    }
 
 	    if (vbloodPlayerLevels[vblood].Count > 1)
@@ -54,7 +55,7 @@ public class TrackVBloodCombat
 				    vbloodLevel = prefabEntity.Read<UnitLevel>().Level;
 				    if (!Core.Prefabs.TryGetItem(vblood, out var vbloodPrefab)) return;
 				    var vbloodLabel = ChatColor.Purple(vbloodPrefab.GetLocalizedName());
-				    var userMaxLevel = vbloodPlayerLevels[vblood][user.CharacterName];
+				    var userMaxLevel = vbloodPlayerLevels[vblood][player.Name];
 				    if (userMaxLevel > vbloodLevel)
 				    {
 					    var msg = $"Your fight with {vbloodLabel} will not be recorded. Your level is too high.";
@@ -106,12 +107,15 @@ public class TrackVBloodCombat
 			foreach (var (vblood, cachedLevels) in vbloodPlayerLevels)
 			{
 				// Get VBlood Entity. Check AggroBuffer for Players.
-				var usersOnline = GameData.Users.Online;
+				var usersOnline = Core.Players.GetCachedUsersOnline();
+
 				foreach (var user in usersOnline)
 				{
-					if (cachedLevels.TryGetValue(user.CharacterName, out var cachedLevel))
+					Player player = new(user);
+					if (cachedLevels.TryGetValue(player.Name, out var cachedLevel))
 					{
-						var currentLevel = user.Equipment.Level;
+
+						var currentLevel = Helper.GetPlayerEquipmentLevel(player);
 						if (cachedLevel < currentLevel)
 						{
 							var vbloodLevel = 0;
@@ -125,14 +129,14 @@ public class TrackVBloodCombat
 									{
 										if (!Core.Prefabs.TryGetItem(vblood, out var vbloodPrefab)) break;
 										var vbloodLabel = ChatColor.Purple(vbloodPrefab.GetLocalizedName());
-										var msg = $"Your fight with {vbloodLabel} will not be recorded. A player level is too high ({ChatColor.Yellow(user.CharacterName)}).";
+										var msg = $"Your fight with {vbloodLabel} will not be recorded. A player level is too high ({ChatColor.Yellow(player.Name)}).";
 										// var msg = $"Fight not recorded. Player level ({ChatColor.Yellow(user.CharacterName)}) is higher than {vbloodLabel}.";
 										Core.KillVBloodService.SendVBloodMessageToPlayers(vbloodPlayerLevels[vblood].Keys.ToList(), msg);
 									}
 								}
 							}
 						}
-						cachedLevels[user.CharacterName] = Math.Max(cachedLevel, currentLevel);
+						cachedLevels[player.Name] = Math.Max(cachedLevel, currentLevel);
 					}
 				}
 			}

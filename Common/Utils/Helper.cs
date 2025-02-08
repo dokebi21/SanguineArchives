@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Bloody.Core.Models.v1.Internals;
 using Il2CppInterop.Runtime;
 using Il2CppInterop.Runtime.InteropTypes;
 using Il2CppSystem;
@@ -385,6 +386,14 @@ internal static partial class Helper
 	public static bool IsPlayerDeathFromPvP(Entity player)
 	{
 		return BuffUtility.HasBuff(Core.EntityManager, player, Prefabs.Buff_General_VampirePvPDeathDebuff);
+	}
+
+	public static float GetPlayerEquipmentLevel(Player player)
+	{
+		var charEntity = player.Character;
+		var equipment = charEntity.Read<Equipment>();
+		var characterLevel = equipment.ArmorLevel + equipment.SpellLevel + equipment.WeaponLevel;
+		return characterLevel;
 	}
 
 	// add the component debugunlock
