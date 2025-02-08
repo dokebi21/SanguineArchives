@@ -1,13 +1,12 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
+using ProjectM.Network;
 using SanguineArchives.Common.KindredCommands.Models;
 using SanguineArchives.Common.Utils;
-using ProjectM.Network;
 using Unity.Collections;
 using Unity.Entities;
 
-namespace SanguineArchives.Services;
+namespace SanguineArchives.Common.KindredCommands.Services;
 
 internal class PlayerService
 {

@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using ProjectM;
 using Stunlock.Core;
 
-namespace SanguineArchives.Services;
+namespace SanguineArchives.Common.KindredCommands.Services;
 
 internal class PrefabService
 {

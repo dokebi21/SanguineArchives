@@ -5,13 +5,11 @@ using BepInEx.Unity.IL2CPP.Utils.Collections;
 using ProjectM;
 using ProjectM.Physics;
 using ProjectM.Scripting;
-using Unity.Entities;
-using UnityEngine;
-using SanguineArchives.Services;
+using SanguineArchives.Common.KindredCommands.Services;
 using SanguineArchives.DeadlyMode.Services;
 using SanguineArchives.VBloodArchives.Services;
 
-namespace SanguineArchives;
+namespace SanguineArchives.Common;
 
 internal static class Core
 {

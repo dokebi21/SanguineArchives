@@ -1,12 +1,10 @@
 ﻿using Bloodstone.API;
-using Bloody.Core.API.v1;
 using Bloody.Core.GameData.v1;
 using SanguineArchives.Common.BloodyNotify.DB;
 using SanguineArchives.Common.Utils;
 using SanguineArchives.VBloodArchives.Services;
 using ProjectM.Network;
 using ProjectM;
-using Stunlock.Core;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;

@@ -1,8 +1,7 @@
 using HarmonyLib;
 using ProjectM;
 
-
-namespace SanguineArchives.Patches;
+namespace SanguineArchives.Common.KindredCommands.Patches;
 
 [HarmonyPatch(typeof(SpawnTeamSystem_OnPersistenceLoad), nameof(SpawnTeamSystem_OnPersistenceLoad.OnUpdate))]
 public static class InitializationPatch

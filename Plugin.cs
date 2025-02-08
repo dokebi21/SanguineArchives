@@ -21,12 +21,12 @@ public class Plugin : BasePlugin
 {
     internal static Harmony Harmony;
     public static ManualLogSource LogInstance { get; private set; }
-    
+
     public override void Load()
     {
         if (Application.productName != "VRisingServer")
             return;
-        
+
         // Plugin startup logic
         Log.LogInfo($"Plugin {MyPluginInfo.PLUGIN_GUID} version {MyPluginInfo.PLUGIN_VERSION} is loaded!");
         LogInstance = Log;
@@ -36,11 +36,11 @@ public class Plugin : BasePlugin
 
         // Register all commands in the assembly with VCF
         CommandRegistry.RegisterAll();
-        
+
         EventsHandlerSystem.OnInitialize += GameDataOnInitialize;
         LoadDatabase.LoadAllConfig();
     }
-    
+
     private void GameDataOnInitialize(World world)
     {
         EventsHandlerSystem.OnDeathVBlood += KillVBloodSystem.OnDetahVblood;

@@ -3,9 +3,8 @@ using System.Runtime.InteropServices;
 using Il2CppInterop.Runtime;
 using ProjectM;
 using Stunlock.Core;
-using Unity.Entities;
 
-namespace SanguineArchives;
+namespace SanguineArchives.Common.Utils;
 
 //#pragma warning disable CS8500
 public static class ECSExtensions

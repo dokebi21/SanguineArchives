@@ -9,7 +9,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text.Json;
 
-namespace SanguineArchives.Services
+namespace SanguineArchives.Common.KindredCommands.Services
 {
     internal class LocalizationService
     {
