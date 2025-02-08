@@ -85,17 +85,6 @@ namespace SanguineArchives.VBloodArchives.Services
 
         public void AnnounceVBloodKill(string vblood)
         {
-            if (CheckIfBloodyBoss(vblood))
-            {
-                RemoveKillers(vblood);
-                return;
-            }
-            if (Database.getPrefabIgnoreValue(vblood))
-            {
-                RemoveKillers(vblood);
-                return;
-            }
-
             var killers = GetKillers(vblood);
 
             if (killers.Count == 0)
@@ -240,40 +229,6 @@ namespace SanguineArchives.VBloodArchives.Services
                 }
             }
             return sbKillersLabel.ToString();
-        }
-
-        private bool CheckIfBloodyBoss(string vblood)
-        {
-            var entitiesQuery = Bloody.Core.Helper.v1.QueryComponents.GetEntitiesByComponentTypes<VBloodUnit, NameableInteractable, LifeTime>(EntityQueryOptions.Default, false);
-            foreach (var entity in entitiesQuery)
-            {
-                try
-                {
-                    var npc = GameData.Npcs.FromEntity(entity);
-                    var vbloodString = _prefabCollectionSystem.PrefabGuidToNameDictionary[npc.PrefabGUID];
-                    if (vbloodString == vblood)
-                    {
-                        NameableInteractable _nameableInteractable = entity.Read<NameableInteractable>();
-                        if (_nameableInteractable.Name.Value.Contains("bb"))
-                        {
-                            var health = entity.Read<Health>();
-                            if (health.IsDead)
-                            {
-                                entitiesQuery.Dispose();
-                                return true;
-                            }
-
-                            entitiesQuery.Dispose();
-                            return false;
-                        }
-                    }
-                } catch {
-                    continue;
-                }
-            }
-
-            entitiesQuery.Dispose();
-            return false;
         }
     }
 }

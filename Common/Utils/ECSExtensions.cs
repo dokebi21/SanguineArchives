@@ -86,20 +86,26 @@ public static class ECSExtensions
 			? prefabCollectionSystem.PrefabGuidToNameDictionary[prefabGuid] + " " + prefabGuid : "GUID Not Found").ToString();
 	}
 
-	public static string PrefabName(this PrefabGUID prefabGuid)
+	public static string GetPrefabName(this PrefabGUID prefabGuid)
+	{
+		return Core.PrefabCollectionSystem.PrefabGuidToNameDictionary.TryGetValue(prefabGuid, out string prefabName) ? $"{prefabName} {prefabGuid}" : "String.Empty";
+	}
+
+	public static string GetLocalizedName(this PrefabGUID prefabGuid)
 	{
 		var name = Core.Localization.GetPrefabName(prefabGuid);
+		Core.Log.LogInfo($"GetLocalizedName: {name} for {prefabGuid}");
 		return string.IsNullOrEmpty(name) ? prefabGuid.LookupName() : name;
 	}
 
-	public static string EntityName(this Entity entity)
+	public static string GetLocalizedName(this Entity entity)
 	{
 		var name = string.Empty;
 		if (entity.Has<NameableInteractable>())
 			name = entity.Read<NameableInteractable>().Name.ToString();
 
 		if (string.IsNullOrEmpty(name) && entity.Has<PrefabGUID>())
-			name = entity.Read<PrefabGUID>().PrefabName();
+			name = entity.Read<PrefabGUID>().GetLocalizedName();
 
 		if (string.IsNullOrEmpty(name))
 			name = entity.ToString();

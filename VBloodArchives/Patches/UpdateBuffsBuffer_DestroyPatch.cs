@@ -20,7 +20,7 @@ internal class UpdateBuffsBuffer_DestroyPatch
                 Age age = buffEntity.Read<Age>();
                 Buff buff = buffEntity.Read<Buff>();
                 var targetPrefabGUID = buff.Target.Read<PrefabGUID>();
-                var vbloodString = Core.PrefabCollectionSystem.PrefabGuidToNameDictionary[targetPrefabGUID];
+                var vbloodString = targetPrefabGUID.GetPrefabName();
                 var isDead = buff.Target.Read<Health>().IsDead;
                 Core.KillVBloodService.SetCombatDuration(vbloodString, age.Value);
                 Core.TrackVBloodCombat.StopTrackingForVBlood(vbloodString, isDead);

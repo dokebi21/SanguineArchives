@@ -30,7 +30,7 @@ internal static class Core
     public const int MAX_REPLY_LENGTH = 509;
 
     // Services
-    public static LocalizationService Localization { get; } = new();
+    public static LocalizationService Localization { get; internal set; }
     public static PlayerService Players { get; internal set; }
     public static PrefabService Prefabs { get; internal set; }
     public static DeadlyModeService DeadlyModeService { get; internal set; }
@@ -53,6 +53,7 @@ internal static class Core
         ServerGameSettingsSystem = Server.GetExistingSystemManaged<ServerGameSettingsSystem>();
         ServerScriptMapper = Server.GetExistingSystemManaged<ServerScriptMapper>();
 
+        Localization = new();
         Players = new();
         Prefabs = new();
         DeadlyModeService = new();

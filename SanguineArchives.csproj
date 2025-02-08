@@ -23,6 +23,10 @@
     <PackageReference Include="Bloody.Core" Version="1.2.4" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Common\KindredCommands\Data\English.json" />
+    <EmbeddedResource Include="Common\KindredCommands\Data\PrefabNames.json" />
+  </ItemGroup>
+  <ItemGroup>
     <Folder Include="Common\KindredCommands\" />
   </ItemGroup>
   <PropertyGroup>

@@ -1,10 +1,8 @@
 using System;
-using SanguineArchives.Common.BloodyNotify.DB;
 using SanguineArchives.Common.Commands.Converters;
 using ProjectM.Network;
 using System.Collections.Generic;
 using SanguineArchives.VBloodArchives.Data;
-using SanguineArchives.Common.Utils;
 using VampireCommandFramework;
 using SanguineArchives.VBloodArchives.Services;
 
@@ -12,30 +10,31 @@ namespace SanguineArchives.VBloodArchives.Commands;
 
 public class VBloodRecordsCommand
 {
-    public static void SendVBloodRecordsToChat(ChatCommandContext ctx, string vblood, VBloodRecord record)
+    public static void SendVBloodRecordsToChat(ChatCommandContext ctx, PrefabGUID vbloodPrefab, VBloodRecord record)
     {
-        var vbloodLabel = ChatColor.Purple(Database.getPrefabNameValue(vblood));
+        var vbloodLabel = ChatColor.Purple(vbloodPrefab.GetLocalizedName());
         var characterNameLabel = ChatColor.Yellow($"{record.CharacterName}");
         var durationLabel = ChatColor.Green($"{record.CombatDuration:F2}s");
         // var vbloodLevelLabel = ChatColor.Gray($"(Lvl {Core.VBloodRecordsService.GetVBloodLevel(vblood)})");
         var dateLabel = ChatColor.Gray($"({DateTime.Parse(record.DateTime).ToString("d")})");
         ctx.Reply($"{vbloodLabel}: {characterNameLabel} - {durationLabel} {dateLabel}");
     }
-    
+
     [Command("vbloodrecordsboss", "vbrb", description: "Show records for a V Blood boss", adminOnly: false)]
     public static void ShowVBloodRecords(ChatCommandContext ctx, FoundVBlood foundVBlood)
     {
-        var vblood = Core.PrefabCollectionSystem.PrefabGuidToNameDictionary[foundVBlood.Value];
-        var vbloodLabel = ChatColor.Purple(Database.getPrefabNameValue(vblood));
+        var vbloodPrefab = foundVBlood.Value;
+        var vblood = vbloodPrefab.GetPrefabName();
+        var vbloodLabel = ChatColor.Purple(vbloodPrefab.GetLocalizedName());
         List<VBloodRecord> topRecords = Core.VBloodRecordsService.GetRecordsForVBlood(vblood);
-        
+
         ctx.Reply(ChatColor.Green($"*** V Blood Records for {vbloodLabel} ***"));
         foreach (var vbloodRecord in topRecords)
         {
-            SendVBloodRecordsToChat(ctx, vblood, vbloodRecord);
+            SendVBloodRecordsToChat(ctx, vbloodPrefab, vbloodRecord);
         }
     }
-    
+
     [Command("vbloodrecords", "vbr", description: "Show top records for V Blood", adminOnly: false)]
     public static void ShowTopRecords(ChatCommandContext ctx, int act = 0)
     {
@@ -67,13 +66,16 @@ public class VBloodRecordsCommand
                     break;
             }
         }
-        
+
         foreach (var (vblood, record) in topRecords)
         {
-            SendVBloodRecordsToChat(ctx, vblood, record);
+            if (Core.Prefabs.TryGetItem(vblood, out var vbloodPrefab))
+            {
+                SendVBloodRecordsToChat(ctx, vbloodPrefab, record);
+            }
         }
     }
-    
+
     [Command("vbloodrecordsplayer", "vbrp", description: "Show V Blood records for player", adminOnly: false)]
     public static void ShowRecordsForPlayer(ChatCommandContext ctx, int act = 0, OnlinePlayer player = null)
     {
@@ -83,7 +85,7 @@ public class VBloodRecordsCommand
         var actLabel = $"Act {act}";
         var nameLabel = ChatColor.Yellow($"{name.ToString()}");
         Dictionary<string, VBloodRecord> playerRecords;
-        
+
         if (act == 0)
         {
             ctx.Reply(ChatColor.Green($"*** Recent V Blood Records for {nameLabel} ***"));
@@ -112,7 +114,10 @@ public class VBloodRecordsCommand
 
         foreach (var (vblood, record) in playerRecords)
         {
-            SendVBloodRecordsToChat(ctx, vblood, record);
+            if (Core.Prefabs.TryGetItem(vblood, out var vbloodPrefab))
+            {
+                SendVBloodRecordsToChat(ctx, vbloodPrefab, record);
+            }
         }
     }
 }

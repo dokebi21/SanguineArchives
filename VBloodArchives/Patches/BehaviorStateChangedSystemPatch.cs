@@ -27,7 +27,7 @@ internal static class BehaviorStateChangedSystemPatch
                 var vbloodEntity = behaviourTreeStateChangedEvent.Entity;
                 var health = vbloodEntity.Read<Health>();
                 var vbloodPrefabGUID = vbloodEntity.Read<PrefabGUID>();
-                var vbloodString = Core.PrefabCollectionSystem.PrefabGuidToNameDictionary[vbloodPrefabGUID];
+                var vbloodString = vbloodPrefabGUID.GetPrefabName();
                 Core.Log.LogInfo($"BehaviourTreeStateChangedEvent: {vbloodString} - {prevState}->{newState} HP:{health.Value}/{health.MaxHealth.Value}");
                 if ((prevState & GenericEnemyState.AnyCombat) != 0 && (newState & GenericEnemyState.AnyCombat) == 0)
                 {

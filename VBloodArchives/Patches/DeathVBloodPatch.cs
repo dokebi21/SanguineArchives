@@ -38,7 +38,7 @@ internal class DeathVBloodPatch
                 {
                     var player = Core.EntityManager.GetComponentData<PlayerCharacter>(deathEvent.Target);
                     var user = Core.EntityManager.GetComponentData<User>(player.UserEntity);
-                    var vbloodString = Core.PrefabCollectionSystem.PrefabGuidToNameDictionary[deathEvent.Source];
+                    var vbloodString = deathEvent.Source.GetPrefabName();
                     Core.KillVBloodService.AddKiller(vbloodString.ToString(), user.CharacterName.ToString());
                     Core.KillVBloodService.lastKillerUpdate[vbloodString.ToString()] = DateTime.Now;
                     _checkKiller = true;

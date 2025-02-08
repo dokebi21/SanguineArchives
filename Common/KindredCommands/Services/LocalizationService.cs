@@ -58,7 +58,7 @@ namespace SanguineArchives.Common.KindredCommands.Services
             }
             else
             {
-                Console.WriteLine("Resource not found!");
+                Console.WriteLine("Resource not found??");
             }
         }
 
@@ -78,7 +78,7 @@ namespace SanguineArchives.Common.KindredCommands.Services
             }
             else
             {
-                Console.WriteLine("Resource not found!");
+                Console.WriteLine("Resource not found???");
             }
         }
 
