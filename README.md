@@ -46,3 +46,5 @@ This mod shares a lot of code from existing mods from the community, especially 
 - [Bloodcraft](https://github.com/mfoltz/Bloodcraft) by [mfoltz (zfolmt)](https://github.com/mfoltz)
 - [KindredCommands](https://github.com/Odjit/KindredCommands) by [odjit](https://github.com/Odjit)
 - [BloodyNotify](https://github.com/oscarpedrero/BloodyNotify) by [oscarpedrero (Trodi)](https://github.com/oscarpedrero)
+
+Special thanks to [mfoltz (zfolmt)](https://github.com/mfoltz) for the mod name suggestion and ChatGPT for the genius hourglass blood icon concept lol.
