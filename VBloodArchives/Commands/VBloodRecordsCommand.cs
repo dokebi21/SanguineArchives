@@ -21,7 +21,7 @@ public class VBloodRecordsCommand
         ctx.Reply($"{vbloodLabel}: {characterNameLabel} - {durationLabel} {dateLabel}");
     }
 
-    [Command("boss", "b", usage: ".sga b [BossName]", description: "Show records for a V Blood boss", adminOnly: false)]
+    [Command("boss", "b", usage: ".sga b [BossName]", description: "Show records for the specified V Blood boss", adminOnly: false)]
     public static void ShowVBloodRecords(ChatCommandContext ctx, FoundVBlood foundVBlood)
     {
         var vbloodPrefab = foundVBlood.Value;
