@@ -5,8 +5,6 @@ using BepInEx.Unity.IL2CPP.Utils.Collections;
 using ProjectM;
 using ProjectM.Physics;
 using ProjectM.Scripting;
-using SanguineArchives.Common.KindredCommands.Services;
-using SanguineArchives.DeadlyMode.Services;
 using SanguineArchives.VBloodArchives.Services;
 
 namespace SanguineArchives.Common;
@@ -33,7 +31,6 @@ internal static class Core
     public static LocalizationService Localization { get; internal set; }
     public static PlayerService Players { get; internal set; }
     public static PrefabService Prefabs { get; internal set; }
-    public static DeadlyModeService DeadlyModeService { get; internal set; }
     public static VBloodRecordsService VBloodRecordsService { get; internal set; }
     public static TrackVBloodCombat TrackVBloodCombat { get; internal set; }
     public static KillVBloodService KillVBloodService { get; internal set; }
@@ -56,7 +53,6 @@ internal static class Core
         Localization = new();
         Players = new();
         Prefabs = new();
-        DeadlyModeService = new();
         VBloodRecordsService = new();
         TrackVBloodCombat = new();
         KillVBloodService = new();
