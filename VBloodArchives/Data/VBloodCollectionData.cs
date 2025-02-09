@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using SanguineArchives.Common.KindredCommands.Data;
+using SanguineArchives.VBloodArchives.Services;
 using Stunlock.Core;
 
 namespace SanguineArchives.VBloodArchives.Data;
@@ -23,7 +24,7 @@ public class VBloodCollectionData
         "CHAR_Undead_Priest_VBlood",
         "CHAR_Bandit_Tourok_VBlood"
     };
-    
+
     public static readonly List<string> VBloods_Act2 = new List<string>
     {
         "CHAR_Villager_Tailor_VBlood",
@@ -44,7 +45,7 @@ public class VBloodCollectionData
         "CHAR_Militia_BishopOfDunley_VBlood",
         "CHAR_Militia_Leader_VBlood"
     };
-    
+
     public static readonly List<string> VBloods_Act3 = new List<string>
     {
         "CHAR_Gloomrot_Iva_VBlood",
@@ -57,13 +58,13 @@ public class VBloodCollectionData
         "CHAR_WerewolfChieftain_Human",
         "CHAR_Undead_CursedSmith_VBlood"
     };
-    
+
     public static readonly List<string> VBloods_Act4 = new List<string>
     {
         "CHAR_ChurchOfLight_Overseer_VBlood",
         "CHAR_ChurchOfLight_Sommelier_VBlood",
         "CHAR_Harpy_Matriarch_VBlood",
-        "CHAR_ArchMage_VBlood", 
+        "CHAR_ArchMage_VBlood",
         "CHAR_Gloomrot_TheProfessor_VBlood",
         "CHAR_Cursed_Witch_VBlood",
         "CHAR_Winter_Yeti_VBlood",
@@ -78,7 +79,73 @@ public class VBloodCollectionData
         "CHAR_Gloomrot_Monster_VBlood",
         "CHAR_Vampire_Dracula_VBlood"
     };
-    
+
+    public static readonly Dictionary<string, List<VBloodRecord>> DefaultVBloodRecords = new Dictionary<string, List<VBloodRecord>>
+    {
+        { "CHAR_Forest_Wolf_VBlood", [] },
+        { "CHAR_Bandit_Frostarrow_VBlood", [] },
+        { "CHAR_Bandit_StoneBreaker_VBlood", [] },
+        { "CHAR_Bandit_Foreman_VBlood", [] },
+        { "CHAR_Bandit_Stalker_VBlood", [] },
+        { "CHAR_Undead_BishopOfDeath_VBlood", [] },
+        { "CHAR_Bandit_Chaosarrow_VBlood", [] },
+        { "CHAR_Bandit_Bomber_VBlood", [] },
+        { "CHAR_Vermin_DireRat_VBlood", [] },
+        { "CHAR_Bandit_Fisherman_VBlood", [] },
+        { "CHAR_Poloma_VBlood", [] },
+        { "CHAR_Forest_Bear_Dire_Vblood", [] },
+        { "CHAR_Undead_Priest_VBlood", [] },
+        { "CHAR_Bandit_Tourok_VBlood", [] },
+        { "CHAR_Villager_Tailor_VBlood", [] },
+        { "CHAR_Militia_Guard_VBlood", [] },
+        { "CHAR_Militia_Nun_VBlood", [] },
+        { "CHAR_VHunter_Leader_VBlood", [] },
+        { "CHAR_Undead_Leader_Vblood", [] },
+        { "CHAR_Undead_BishopOfShadows_VBlood", [] },
+        { "CHAR_Militia_Scribe_VBlood", [] },
+        { "CHAR_Undead_Infiltrator_VBlood", [] },
+        { "CHAR_Militia_Glassblower_VBlood", [] },
+        { "CHAR_Militia_Longbowman_LightArrow_Vblood", [] },
+        { "CHAR_Geomancer_Human_VBlood", [] },
+        { "CHAR_Wendigo_VBlood", [] },
+        { "CHAR_Vampire_IceRanger_VBlood", [] },
+        { "CHAR_Vampire_HighLord_VBlood", [] },
+        { "CHAR_VHunter_Jade_VBlood", [] },
+        { "CHAR_Militia_BishopOfDunley_VBlood", [] },
+        { "CHAR_Militia_Leader_VBlood", [] },
+        { "CHAR_Gloomrot_Iva_VBlood", [] },
+        { "CHAR_Gloomrot_Voltage_VBlood", [] },
+        { "CHAR_Gloomrot_Purifier_VBlood", [] },
+        { "CHAR_Spider_Queen_VBlood", [] },
+        { "CHAR_Villager_CursedWanderer_VBlood", [] },
+        { "CHAR_Undead_ZealousCultist_VBlood", [] },
+        { "CHAR_Cursed_ToadKing_VBlood", [] },
+        { "CHAR_WerewolfChieftain_Human", [] },
+        { "CHAR_Undead_CursedSmith_VBlood", [] },
+        { "CHAR_ChurchOfLight_Overseer_VBlood", [] },
+        { "CHAR_ChurchOfLight_Sommelier_VBlood", [] },
+        { "CHAR_Harpy_Matriarch_VBlood", [] },
+        { "CHAR_ArchMage_VBlood", [] },
+        { "CHAR_Gloomrot_TheProfessor_VBlood", [] },
+        { "CHAR_Cursed_Witch_VBlood", [] },
+        { "CHAR_Winter_Yeti_VBlood", [] },
+        { "CHAR_ChurchOfLight_Cardinal_VBlood", [] },
+        { "CHAR_Gloomrot_RailgunSergeant_VBlood", [] },
+        { "CHAR_VHunter_CastleMan", [] },
+        { "CHAR_BatVampire_VBlood", [] },
+        { "CHAR_Cursed_MountainBeast_VBlood", [] },
+        { "CHAR_Vampire_BloodKnight_VBlood", [] },
+        { "CHAR_ChurchOfLight_Paladin_VBlood", [] },
+        { "CHAR_Manticore_VBlood", [] },
+        { "CHAR_Gloomrot_Monster_VBlood", [] },
+        { "CHAR_Vampire_Dracula_VBlood", [] },
+        { "CHAR_Bandit_GraveDigger_VBlood_UNUSED", [] },
+        { "CHAR_Bandit_Leader_VBlood_UNUSED", [] },
+        { "CHAR_Bandit_Miner_VBlood_UNUSED", [] },
+        { "CHAR_Militia_Hound_VBlood", [] },
+        { "CHAR_Militia_HoundMaster_VBlood", [] },
+    };
+
     public static readonly HashSet<PrefabGUID> Buff_InCombat_VBlood_Set = new HashSet<PrefabGUID>
     {
         /* CHAR_Forest_Wolf_VBlood (Alpha the White Wolf) */
@@ -171,7 +238,7 @@ public class VBloodCollectionData
         /* CHAR_Harpy_Matriarch_VBlood (Morian the Stormwing Matriarch) */
         Prefabs.Buff_InCombat_VBlood_Harpy_Matriarch,
         /* CHAR_ArchMage_VBlood (Mairwyn the Elementalist) */
-        Prefabs.Buff_InCombat_VBlood_Archmage, 
+        Prefabs.Buff_InCombat_VBlood_Archmage,
         /* CHAR_Gloomrot_TheProfessor_VBlood (Henry Blackbrew the Doctor) */
         Prefabs.Buff_InCombat_TheProfessor,
         /* CHAR_Cursed_Witch_VBlood (Matka the Curse Weaver) */

@@ -2,10 +2,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
 using System;
-using SanguineArchives.Common.KindredCommands.Data;
-using Unity.Entities;
 using ProjectM;
 using System.Linq;
+using SanguineArchives.VBloodArchives.Data;
 
 namespace SanguineArchives.VBloodArchives.Services
 {
@@ -21,8 +20,8 @@ namespace SanguineArchives.VBloodArchives.Services
         /**
          * CombatRecord for each VBlood.
          */
-        public Dictionary<string, List<VBloodRecord>> vbloodRecords = new();
-        
+        public Dictionary<string, List<VBloodRecord>> vbloodRecords = new(VBloodCollectionData.DefaultVBloodRecords);
+
         protected static readonly string CONFIG_PATH = Path.Combine(BepInEx.Paths.ConfigPath, MyPluginInfo.PLUGIN_NAME);
         protected string RecordsConfigPath => Path.Combine(CONFIG_PATH, "vblood_combat_records.json");
 
@@ -81,7 +80,7 @@ namespace SanguineArchives.VBloodArchives.Services
             }
             SaveRecords();
         }
-        
+
         public List<VBloodRecord> GetRecordsForVBlood(string vblood)
         {
             if (vbloodRecords.ContainsKey(vblood))
@@ -109,15 +108,15 @@ namespace SanguineArchives.VBloodArchives.Services
             }
             return playerRecords;
         }
-        
+
         public Dictionary<string, VBloodRecord> GetRecordsForPlayerByDate(string characterName, int count)
         {
             var playerRecords = GetRecordsForPlayer(characterName);
             var sortedByDate = playerRecords.OrderByDescending(kvp => kvp.Value.DateTime).Take(count);
             return sortedByDate.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
         }
-        
-        
+
+
         public Dictionary<string, VBloodRecord> GetTopRecords()
         {
             Dictionary<string, VBloodRecord> topRecords = new();
@@ -138,14 +137,14 @@ namespace SanguineArchives.VBloodArchives.Services
             }
             return topRecords;
         }
-        
+
         public Dictionary<string, VBloodRecord> GetTopRecordsByDate(int count)
         {
             var topRecords = GetTopRecords();
             var sortedByDate = topRecords.OrderByDescending(kvp => kvp.Value.DateTime).Take(count);
             return sortedByDate.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
         }
-        
+
         public Dictionary<string, VBloodRecord> GetTopRecordsForVBloods(List<string> vbloods)
         {
             Dictionary<string, VBloodRecord> topRecords = new();
@@ -165,7 +164,7 @@ namespace SanguineArchives.VBloodArchives.Services
             return topRecords;
         }
 
-        
+
         /**
          * Check if new record is better than current top record,
          */
@@ -187,7 +186,7 @@ namespace SanguineArchives.VBloodArchives.Services
 
             return -1;
         }
-        
+
         public float GetCurrentTopRecord(string vblood)
         {
             if (TryGetTopRecordForVBlood(vblood, out var record))
@@ -197,7 +196,7 @@ namespace SanguineArchives.VBloodArchives.Services
 
             return -1;
         }
-        
+
         /**
          * Check if new record is better than current player record,
          */
@@ -226,7 +225,7 @@ namespace SanguineArchives.VBloodArchives.Services
             playerRecord = vbloodRecords[vblood][index];
             return true;
         }
-        
+
         public bool TryGetTopRecordForVBlood(string vblood, out VBloodRecord topRecord)
         {
             if (vbloodRecords[vblood].Count == 0)
@@ -266,7 +265,7 @@ namespace SanguineArchives.VBloodArchives.Services
             var jsonString = JsonSerializer.Serialize(vbloodRecords, options);
             File.WriteAllText(RecordsConfigPath, jsonString);
         }
-        
+
         public void LoadRecords()
         {
             if (File.Exists(RecordsConfigPath))
