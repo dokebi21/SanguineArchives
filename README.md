@@ -1,4 +1,4 @@
-![](logo.png)
+![](icon.png)
 # SanguineArchives for V Rising
 
 SanguineArchives is a server mod for V Rising. Keep records of combat times whenever players defeat V Blood bosses.
