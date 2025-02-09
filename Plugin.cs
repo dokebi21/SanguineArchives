@@ -9,7 +9,6 @@ namespace SanguineArchives;
 [BepInPlugin(MyPluginInfo.PLUGIN_GUID, MyPluginInfo.PLUGIN_NAME, MyPluginInfo.PLUGIN_VERSION)]
 [BepInDependency("gg.deca.VampireCommandFramework")]
 [BepInDependency("gg.deca.Bloodstone")]
-[BepInDependency("trodi.Bloody.Core")]
 [Bloodstone.API.Reloadable]
 public class Plugin : BasePlugin
 {

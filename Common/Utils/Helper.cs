@@ -1,20 +1,14 @@
 using System.Collections.Generic;
-using Bloody.Core.Models.v1.Internals;
 using Il2CppInterop.Runtime;
-using Il2CppInterop.Runtime.InteropTypes;
 using Il2CppSystem;
 using SanguineArchives.Common.KindredCommands.Data;
 using ProjectM;
 using ProjectM.Gameplay.Clan;
-using ProjectM.Network;
 using ProjectM.Scripting;
 using ProjectM.Shared;
-using Stunlock.Core;
 using Unity.Collections;
-using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
-using UnityEngine;
 using VampireCommandFramework;
 
 namespace SanguineArchives.Common.Utils;
