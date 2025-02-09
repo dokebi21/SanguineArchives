@@ -8,6 +8,7 @@ using SanguineArchives.VBloodArchives.Services;
 
 namespace SanguineArchives.VBloodArchives.Commands;
 
+[CommandGroup(name: "archives", "sga")]
 public class VBloodRecordsCommand
 {
     public static void SendVBloodRecordsToChat(ChatCommandContext ctx, PrefabGUID vbloodPrefab, VBloodRecord record)
@@ -20,7 +21,7 @@ public class VBloodRecordsCommand
         ctx.Reply($"{vbloodLabel}: {characterNameLabel} - {durationLabel} {dateLabel}");
     }
 
-    [Command("vbloodrecordsboss", "vbrb", description: "Show records for a V Blood boss", adminOnly: false)]
+    [Command("boss", "b", usage: ".sga b [BossName]", description: "Show records for a V Blood boss", adminOnly: false)]
     public static void ShowVBloodRecords(ChatCommandContext ctx, FoundVBlood foundVBlood)
     {
         var vbloodPrefab = foundVBlood.Value;
@@ -35,7 +36,7 @@ public class VBloodRecordsCommand
         }
     }
 
-    [Command("vbloodrecords", "vbr", description: "Show top records for V Blood", adminOnly: false)]
+    [Command("top", "t", usage:".sga t (0-4)", description: "Show top records for V Blood per Act. Shows recent records by default or for Act 0.", adminOnly: false)]
     public static void ShowTopRecords(ChatCommandContext ctx, int act = 0)
     {
         Dictionary<string, VBloodRecord> topRecords;
@@ -76,7 +77,7 @@ public class VBloodRecordsCommand
         }
     }
 
-    [Command("vbloodrecordsplayer", "vbrp", description: "Show V Blood records for player", adminOnly: false)]
+    [Command("player", "p", usage: ".sga p (0-4) (Player)", description: "Show V Blood records per Act for player. Shows recent records by default or for Act 0. Player defaults to self.", adminOnly: false)]
     public static void ShowRecordsForPlayer(ChatCommandContext ctx, int act = 0, OnlinePlayer player = null)
     {
         var name = player?.Value.UserEntity.Read<User>().CharacterName ?? ctx.Event.User.CharacterName;
