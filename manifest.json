@@ -1,6 +1,6 @@
 {
   "name": "SanguineArchives",
-  "version_number": "0.1.0",
+  "version_number": "0.1.1",
   "website_url": "https://github.com/dokebi21/SanguineArchives",
   "description": "Keep records of combat times whenever players defeat V Blood bosses.",
   "dependencies": [

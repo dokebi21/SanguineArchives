@@ -1,3 +1,6 @@
+`0.1.1`
+- Fixed tracking record issue when Player Level equals V Blood level.
+
 `0.1.0`
 - Initial unstable release.
 - Added commands:
