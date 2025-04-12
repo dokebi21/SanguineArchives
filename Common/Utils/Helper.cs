@@ -382,11 +382,11 @@ internal static partial class Helper
 		return BuffUtility.HasBuff(Core.EntityManager, player, Prefabs.Buff_General_VampirePvPDeathDebuff);
 	}
 
-	public static float GetPlayerEquipmentLevel(Player player)
+	public static int GetPlayerEquipmentLevel(Player player)
 	{
 		var charEntity = player.Character;
 		var equipment = charEntity.Read<Equipment>();
-		var characterLevel = equipment.ArmorLevel + equipment.SpellLevel + equipment.WeaponLevel;
+		var characterLevel = (int)Math.Floor(equipment.GetFullLevel());
 		return characterLevel;
 	}
 
